@@ -1,5 +1,6 @@
-package villagerrank;
+package villagerrank.ranking;
 
+import villagerrank.util.HTMLScrape;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +15,12 @@ import villagerrank.util.JSONUtil;
 public class ACNLWorker {
 
     public static Map<String, Villager> villagerMap = new HashMap<>();
+    
+    public ACNLWorker() {
+        
+    }
 
-    public static void createMapAndImages(boolean saveImages) {
+    public void createMapAndImages(boolean saveImages) {
         JSONParser parser = new JSONParser();
 
         try (FileReader fr = new FileReader("villagers.json")) {
@@ -43,7 +48,7 @@ public class ACNLWorker {
                 String scrapeName = villagerName;
                 scrapeName = scrapeName.replace("\\s", "_");
 
-                    // I was thinking of automatically trying the new URL, but
+                // I was thinking of automatically trying the new URL, but
                 // there are just way too many special cases, so I found each
                 // case that was not working and included it here
                 switch (scrapeName) {
@@ -75,4 +80,18 @@ public class ACNLWorker {
             e.printStackTrace();
         }
     }
+
+    public ACNLSorter rankVillager() {
+        Villager[] villagers = new Villager[villagerMap.size()];
+        ACNLWorker.villagerMap.values().toArray(villagers);
+        
+        ACNLSorter as = new ACNLSorter(villagers);
+        as.initiateList1();
+        return as;
+    }
+
+//    public static void main(String[] args) {
+//        createMapAndImages(false);
+//        rankVillager();
+//    }
 }

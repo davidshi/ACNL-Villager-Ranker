@@ -1,4 +1,4 @@
-package villagerrank;
+package villagerrank.ranking;
 
 /**
  *
